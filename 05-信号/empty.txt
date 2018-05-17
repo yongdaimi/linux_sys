@@ -1,0 +1,27 @@
+C标准库提供的函数
+======================================
+一.C标准库提供的操作信号的函数
+signal(int signum, sighandler_t handler); 这里的handler也是一个函数指针
+缺点：不能设置信号屏蔽字，且无法获取原来的信号处理动作
+优点：跨平台
+
+int system(const char *command);
+集合fork, exec, wait 于一体
+system("firefox http://www.baidu.com");
+
+二.可重入函数
+信号会导致异步事件发生，因此在捕捉函数里面应尽量调用可重入函数
+可重新进入函数
+
+在信号捕捉函数里禁止调用不可重入函数
+strtok
+strtok_r
+readdir
+readdir_r
+
+注意：sigempset(&act.sa_mask); // 注意这个值一定需要清空，因为act是一个局部变量，里面的sa_mask是一个垃圾值
+
+
+三. 信号引起的时序竞态和异步IO
+pause(void)
+	使调用进程挂起，直到有信号递达，如果递达信号是忽略，则继续挂起

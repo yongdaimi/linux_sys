@@ -1,0 +1,2 @@
+I am Main thread
+I am Sub thread
